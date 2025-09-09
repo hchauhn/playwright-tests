@@ -1,5 +1,6 @@
 name: Playwright Tests
 
+# Trigger workflow on push or pull request to main branch
 on:
   push:
     branches: [ main ]
@@ -11,19 +12,24 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+      # Checkout the repository
+      - name: Checkout repository
+        uses: actions/checkout@v3
 
+      # Setup Node.js
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v3
         with:
-          node-version: 18
+          node-version: '18'  # Change if you use a different version
 
+      # Install npm dependencies
       - name: Install dependencies
-        run: npm install
+        run: npm ci
 
-      - name: Install Playwright Browsers
+      # Install Playwright browsers
+      - name: Install Playwright browsers
         run: npx playwright install --with-deps
 
-      - name: Run Playwright tests
+      # Run Playwright tests
+      - name: Run tests
         run: npx playwright test
